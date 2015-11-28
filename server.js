@@ -1,4 +1,4 @@
-var express         =       require("express");
+var express         =       require('express');
 var multer          =       require('multer');
 var app             =       express();
 
@@ -14,7 +14,7 @@ var upload          =       multer({ storage: storage});
 app.use(express.static('uploads'))
 
 app.get('/',function(req,res){
-  res.sendFile(__dirname + "/index.html");
+  res.sendFile(__dirname + '/index.html');
 });
 
 app.get('/robots.txt', function(req, res) {
@@ -27,10 +27,9 @@ app.post('/api/upload', upload.array('userFile', 25), function(req,res){
         var file = req.files[index];
         console.log('Uploaded ' + file.originalname + ' to ' + file.path);
     }
-    console.log("sending");
-    res.end("Files uploaded.");
+    res.end('Files uploaded.');
 });
 
 app.listen(3000,function(){
-    console.log("Listening on port 3000");
+    console.log('Listening on port 3000');
 });
