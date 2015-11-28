@@ -1,0 +1,14 @@
+{
+  "name": "simple_portfolio",
+  "version": "0.0.1",
+  "description": "Let students upload their websites to a server.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jennselby/SimplePortfolioApp.git"
+  },
+  "dependencies": {
+    "express": "~4.10.2",
+    "multer": "~0.1.6"
+  }
+}
