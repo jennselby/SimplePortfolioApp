@@ -1,5 +1,6 @@
 var express = require('express');
 var multer = require('multer');
+var helmet = require('helmet');
 var app = express();
 
 var storage = multer.diskStorage({
@@ -12,6 +13,7 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage});
 
 app.use(express.static('uploads'))
+app.use(helmet());
 
 app.get('/',function(req,res){
   res.sendFile(__dirname + '/index.html');
