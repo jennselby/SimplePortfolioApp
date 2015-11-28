@@ -1,6 +1,6 @@
-var express         =       require('express');
-var multer          =       require('multer');
-var app             =       express();
+var express = require('express');
+var multer = require('multer');
+var app = express();
 
 var storage = multer.diskStorage({
   destination: './uploads',
@@ -9,7 +9,7 @@ var storage = multer.diskStorage({
   }
 })
 
-var upload          =       multer({ storage: storage});
+var upload = multer({ storage: storage});
 
 app.use(express.static('uploads'))
 
