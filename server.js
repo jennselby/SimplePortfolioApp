@@ -1,19 +1,15 @@
 var express         =       require("express");
 var multer          =       require('multer');
 var app             =       express();
-var upload          =       multer({ dest: './uploads/'});
 
-app.use(multer({ dest: './uploads/',
-    rename: function (fieldname, filename) {
-        return filename;
-    },
-    onFileUploadStart: function (file) {
-        console.log('Upload of ' + file.originalname + ' is starting ...');
-    },
-    onFileUploadComplete: function (file) {
-        console.log(file.fieldname + ' uploaded to  ' + file.path)
-    }
-}));
+var storage = multer.diskStorage({
+  destination: './uploads',
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+})
+
+var upload          =       multer({ storage: storage});
 
 app.use(express.static('uploads'))
 
@@ -25,13 +21,14 @@ app.get('/robots.txt', function(req, res) {
     res.end('User-agent: *\nDisallow: /');
 });
 
-app.post('/api/upload',function(req,res){
-    upload(req,res,function(err) {
-        if(err) {
-            return res.end("Error uploading.");
-        }
-        res.end("Upload finished");
-    });
+app.post('/api/upload', upload.array('userFile', 25), function(req,res){
+    var numFiles = req.files.length;
+    for (var index = 0; index < numFiles; ++index) {
+        var file = req.files[index];
+        console.log('Uploaded ' + file.originalname + ' to ' + file.path);
+    }
+    console.log("sending");
+    res.end("Files uploaded.");
 });
 
 app.listen(3000,function(){
