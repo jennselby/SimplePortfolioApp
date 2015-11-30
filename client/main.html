@@ -5,6 +5,7 @@
 <body>
     {{> loginButtons }}
     {{> fileUpload }}
+    {{> uploadedStatus}}
 </body>
 
 <template name="fileUpload">
@@ -14,4 +15,11 @@
             <input class="submit" type="submit" value="Upload" name="submit">
         {{/if}}
     {{/if}}
+</template>
+
+<template name="uploadedStatus">
+    {{message}}
+    {{#each results}}
+        {{fileMessage}} <a href="{{link}}">View your file</a>
+    {{/each}}
 </template>
