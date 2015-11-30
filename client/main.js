@@ -2,6 +2,11 @@ Accounts.ui.config({
     passwordSignupFields: 'USERNAME_ONLY'
 });
 
+Accounts.onLogin(function () {
+    document.cookie = 'simple-portfolio-server=' + Accounts._storedLoginToken();
+
+});
+
 Template.fileUpload.events({
     'click .submit': function(event, template) {
         var files = $('.userFile')[0].files;
