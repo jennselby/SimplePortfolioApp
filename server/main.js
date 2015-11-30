@@ -1,16 +1,25 @@
 Meteor.startup(function () {
     // create accounts
     if (! Meteor.users.findOne({username: 'test'})) {
-        Accounts.createUser({username: 'test', password: 'testy',
-                             canUpload: true, isAdmin: true,
-                             profile: {name: 'Testy McTesterson'}});
+        var id = Accounts.createUser({username: 'test', password: 'testy',
+                                      profile: {name: 'Testy McTesterson'}});
+        Meteor.users.update({_id: id}, {$set : {canUpload: true, isAdmin: true}});
     }
     if (! Meteor.users.findOne({username: 'guest'})) {
-        Accounts.createUser({username: 'guest', password: 'guesty',
-                             canUpload: false, isAdmin: false,
-                             profile: {name: 'Guesty McGuesterson'}});
+        var id = Accounts.createUser({username: 'guest', password: 'guesty',
+                                      profile: {name: 'Guesty McGuesterson'}});
+        Meteor.users.update({_id: id}, {$set : {canUpload: false, isAdmin: false}});
     }
 
+});
+
+Meteor.publish('userData', function () {
+    if (this.userId) {
+        return Meteor.users.find({_id: this.userId},
+                                 {fields: {'canUpload': 1}});
+    } else {
+        this.ready();
+    }
 });
 
 
