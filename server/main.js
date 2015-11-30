@@ -5,6 +5,11 @@ Meteor.startup(function () {
                              canUpload: true, isAdmin: true,
                              profile: {name: 'Testy McTesterson'}});
     }
+    if (! Meteor.users.findOne({username: 'guest'})) {
+        Accounts.createUser({username: 'guest', password: 'guesty',
+                             canUpload: false, isAdmin: false,
+                             profile: {name: 'Guesty McGuesterson'}});
+    }
 
 });
 

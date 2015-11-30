@@ -8,6 +8,10 @@
 </body>
 
 <template name="fileUpload">
-    <input class="userFile" type="file" name="userFile" multiple/>
-    <input class="submit" type="submit" value="Upload" name="submit">
+    {{#if currentUser}}
+        {{#if currentUser.canUpload }}
+            <input class="userFile" type="file" name="userFile" multiple/>
+            <input class="submit" type="submit" value="Upload" name="submit">
+        {{/if}}
+    {{/if}}
 </template>
