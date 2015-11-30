@@ -22,3 +22,7 @@ accounts-password
 accounts-ui
 cfs:filesystem
 cfs:standard-packages
+meteorhacks:npm
+
+
+npm-container
