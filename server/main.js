@@ -1,4 +1,9 @@
 Meteor.startup(function () {
+    if (! Meteor.settings.uploadDir) {
+        console.log('Please set the upload directory in your settings file.');
+        process.exit(1);
+    }
+
     // create accounts
     if (! Meteor.users.findOne({username: 'test'})) {
         var id = Accounts.createUser({username: 'test', password: 'testy',
