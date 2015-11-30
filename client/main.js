@@ -29,10 +29,12 @@ Template.fileUpload.events({
                 if (err) {
                     result.fileMessage = 'Error uploading file' + err;
                     result.link = '';
+                    result.filename = '';
                 }
                 else {
                     result.fileMessage = 'Uploaded file';
                     result.link = Meteor.absoluteUrl() + Meteor.user().username + '/' + fileObj.name();
+                    result.filename = fileObj.name();
                 }
                 var results = Session.get('results').concat(result);
                 Session.set('results', results);
