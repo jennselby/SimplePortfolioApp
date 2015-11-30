@@ -1,22 +1,26 @@
 Meteor.startup(function () {
-  // create accounts
-  if (! Meteor.users.findOne({username: 'test'})) {
-    Accounts.createUser({username: 'test', password: 'testy',
-                         canUpload: true, isAdmin: true,
-                         profile: {name: 'Testy McTesterson'}});
-  }
+    // create accounts
+    if (! Meteor.users.findOne({username: 'test'})) {
+        Accounts.createUser({username: 'test', password: 'testy',
+                             canUpload: true, isAdmin: true,
+                             profile: {name: 'Testy McTesterson'}});
+    }
 
 });
 
 
 Files.allow({
-  'insert': function (userId, doc) {
-    if (! userId) return false;
-    var user = Meteor.users.findOne(userId);
-    if (!user || !user.canUpload) return false;
+    'insert': function (userId, doc) {
+        if (! userId) {
+            return false;
+        }
+        var user = Meteor.users.findOne(userId);
+        if (!user || !user.canUpload) {
+            return false;
+        }
 
-    return true;
-  }
+        return true;
+    }
 });
 
 
