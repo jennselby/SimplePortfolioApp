@@ -6,6 +6,7 @@
     {{> loginButtons }}
     {{> fileUpload }}
     {{> uploadedStatus}}
+    {{> fileIndex}}
 </body>
 
 <template name="fileUpload">
@@ -22,4 +23,22 @@
     {{#each results}}
         {{fileMessage}} <a href="{{link}}">View {{filename}}</a>
     {{/each}}
+</template>
+
+<template name="fileIndex">
+    {{#if currentUser}}
+        {{#each grades}}
+            <div class="gradeName">{{gradeName}}</div>
+            {{#each users}}
+                <div class="userName">{{userName}}</div>
+                {{#if htmlFiles.length}}
+                    <ul>
+                    {{#each htmlFiles}}
+                        <li><a href="{{link}}">{{filename}}</a></li>
+                    {{/each}}
+                    </ul>
+                {{/if}}
+            {{/each}}
+        {{/each}}
+    {{/if}}
 </template>

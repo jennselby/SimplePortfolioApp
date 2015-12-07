@@ -35,6 +35,9 @@ Template.fileUpload.events({
                     result.fileMessage = 'Uploaded file';
                     result.link = Meteor.absoluteUrl() + Meteor.user().username + '/' + fileObj.name();
                     result.filename = fileObj.name();
+                    if (result.filename.endsWith('.html')) {
+                        Meteor.call('addHtmlFile', fileObj.name());
+                    }
                 }
                 var results = Session.get('results').concat(result);
                 Session.set('results', results);
@@ -49,4 +52,35 @@ Template.fileUpload.events({
 Template.uploadedStatus.helpers({
     'message': function () { return Session.get('message'); },
     'results': function () { return Session.get('results'); }
+});
+
+Template.fileIndex.helpers({
+    'grades': function () {
+        var grades = [];
+        var users = Meteor.users.find({'isAdmin': false, 'canUpload': true},
+                                      {fields: {'profile': 1, 'htmlFiles': 1, 'grade': 1},
+                                       sort: {'grade': 1}}).fetch();
+        var currentGrade = '';
+        var currentUsers = [];
+        _.each(users, function (user) {
+            if (user.grade != currentGrade) {
+                if (currentGrade != '') {
+                    grades.push({'gradeName': currentGrade, 'users': currentUsers});
+                }
+                currentGrade = user.grade;
+                currentUsers = [];
+            }
+            htmlFiles = [];
+            _.each(user.htmlFiles, function(htmlFilename) {
+                htmlFiles.push({'link': Meteor.absoluteUrl() + Meteor.user().username + '/' + htmlFilename,
+                                'filename': htmlFilename});
+            });
+            currentUsers.push({'userName': user.profile.name, 'htmlFiles': htmlFiles});
+        });
+        if (currentUsers !== []) {
+            grades.push({'gradeName': currentGrade, 'users': currentUsers});
+        }
+        console.log(grades);
+        return grades;
+    }
 });

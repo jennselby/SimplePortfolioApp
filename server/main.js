@@ -34,8 +34,8 @@ Meteor.startup(function () {
 
 Meteor.publish('userData', function () {
     if (this.userId) {
-        return Meteor.users.find({_id: this.userId},
-                                 {fields: {'canUpload': 1}});
+        return Meteor.users.find({},
+                                 {fields: {'isAdmin': 1, 'canUpload': 1, 'grade': 1, 'htmlFiles': 1}});
     } else {
         this.ready();
     }
@@ -95,4 +95,12 @@ WebApp.connectHandlers.use(function (req, res, next) {
 
     next();
 
+});
+
+Meteor.methods({
+    addHtmlFile: function (fileName) {
+        if (Meteor.userId() && Meteor.user().canUpload) {
+            Meteor.users.update({_id:Meteor.userId()}, {$addToSet:{'htmlFiles': fileName}})
+        }
+    }
 });
