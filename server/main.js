@@ -38,8 +38,6 @@ Files.allow({
             return false;
         }
 
-        console.log('doc userid', doc.owner);
-        console.log('userid', userId);
         if (!doc.owner || doc.owner !== userId) {
             return false;
         }
