@@ -5,15 +5,29 @@ Meteor.startup(function () {
     }
 
     // create accounts
-    if (! Meteor.users.findOne({username: 'test'})) {
-        var id = Accounts.createUser({username: 'test', password: 'testy',
-                                      profile: {name: 'Testy McTesterson'}});
-        Meteor.users.update({_id: id}, {$set : {canUpload: true, isAdmin: true}});
-    }
-    if (! Meteor.users.findOne({username: 'guest'})) {
-        var id = Accounts.createUser({username: 'guest', password: 'guesty',
-                                      profile: {name: 'Guesty McGuesterson'}});
-        Meteor.users.update({_id: id}, {$set : {canUpload: false, isAdmin: false}});
+    if (initialUsers !== undefined && defaultPassword !== undefined) {
+        _.each(initialUsers, function (user) {
+            if (! Meteor.users.findOne({username: user.username})) {
+                // Create the user
+                var id = Accounts.createUser({username: user.username, password: defaultPassword,
+                                              profile: {name: user.name}});
+
+                // By default, users can upload and aren't admins, but this can be overridden in
+                // the initialUsers object
+                var additional = {canUpload: true, isAdmin: false, grade: user.grade};
+                if (user.canUpload !== undefined) {
+                    additional.canUpload = user.canUpload;
+                }
+                if (user.isAdmin !== undefined) {
+                    additional.isAdmin = user.isAdmin;
+                }
+                if (additional.canUpload) {
+                    additional.htmlFiles = [];
+                }
+                // add the additional fields into the database
+                Meteor.users.update({_id: id}, {$set : additional});
+            }
+        });
     }
 
 });

@@ -18,6 +18,8 @@ Note: Linux & OSX only; see [Meteor's install instructions](https://www.meteor.c
     "uploadDir": "/path/to/uploaded/files"
 }
 ```
+3. Create file of all users that should be created
+**TODO: document this**
 
 ## Running the Server
 Run
