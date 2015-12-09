@@ -43,23 +43,25 @@ Meteor.publish('userData', function () {
     }
 });
 
+function authorizeFilesChange(userId, doc) {
+    if (! userId) {
+        return false;
+    }
+    var user = Meteor.users.findOne(userId);
+    if (!user || !user.canUpload) {
+        return false;
+    }
+
+    if (!doc.owner || doc.owner !== userId) {
+        return false;
+    }
+
+    return true;
+}
 
 Files.allow({
-    'insert': function (userId, doc) {
-        if (! userId) {
-            return false;
-        }
-        var user = Meteor.users.findOne(userId);
-        if (!user || !user.canUpload) {
-            return false;
-        }
-
-        if (!doc.owner || doc.owner !== userId) {
-            return false;
-        }
-
-        return true;
-    }
+    'insert': authorizeFilesChange,
+    'update': authorizeFilesChange,
 });
 
 
