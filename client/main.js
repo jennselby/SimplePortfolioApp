@@ -58,8 +58,8 @@ Template.fileIndex.helpers({
     'grades': function () {
         var grades = [];
         var users = Meteor.users.find({'isAdmin': false, 'canUpload': true},
-                                      {fields: {'profile': 1, 'htmlFiles': 1, 'grade': 1},
-                                       sort: {'grade': 1}}).fetch();
+                                      {fields: {'profile': 1, 'htmlFiles': 1, 'grade': 1, 'username': 1},
+                                       sort: {'grade': 1, 'profile.name': 1}}).fetch();
         var currentGrade = '';
         var currentUsers = [];
         _.each(users, function (user) {
