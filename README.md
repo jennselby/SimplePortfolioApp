@@ -18,8 +18,16 @@ Note: Linux & OSX only; see [Meteor's install instructions](https://www.meteor.c
     "uploadDir": "/path/to/uploaded/files"
 }
 ```
-3. Create file of all users that should be created
-**TODO: document this**
+3. Create a file of all users that should be created with the following format
+```
+defaultPassword = "somePassword";
+
+initialUsers = [
+    {"name": "Student A.", "username": "stuabcd", "grade": "6th Grade"},
+    {"name": "Student W.", "username": "stuwxyz", "grade": "7th Grade"},
+];
+```
+
 
 ## Running the Server
 Run
