@@ -80,7 +80,6 @@ Template.fileIndex.helpers({
         if (currentUsers !== []) {
             grades.push({'gradeName': currentGrade, 'users': currentUsers});
         }
-        console.log(grades);
         return grades;
     }
 });
