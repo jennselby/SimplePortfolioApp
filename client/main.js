@@ -77,7 +77,7 @@ Template.fileIndex.helpers({
             });
             currentUsers.push({'userName': user.profile.name, 'htmlFiles': htmlFiles});
         });
-        if (currentUsers !== []) {
+        if (!_.isEmpty(currentUsers)) {
             grades.push({'gradeName': currentGrade, 'users': currentUsers});
         }
         return grades;

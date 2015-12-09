@@ -5,7 +5,7 @@ Meteor.startup(function () {
     }
 
     // create accounts
-    if (initialUsers !== undefined && defaultPassword !== undefined) {
+    if (typeof initialUsers !== "undefined" && typeof defaultPassword !== "undefined") {
         _.each(initialUsers, function (user) {
             if (! Meteor.users.findOne({username: user.username})) {
                 // Create the user
