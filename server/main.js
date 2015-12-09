@@ -35,7 +35,9 @@ Meteor.startup(function () {
 Meteor.publish('userData', function () {
     if (this.userId) {
         return Meteor.users.find({},
-                                 {fields: {'isAdmin': 1, 'canUpload': 1, 'grade': 1, 'htmlFiles': 1}});
+                                 {fields: {'username': 1, 'grade': 1, 'profile': 1,
+                                           'isAdmin': 1, 'canUpload': 1,
+                                           'htmlFiles': 1}});
     } else {
         this.ready();
     }
