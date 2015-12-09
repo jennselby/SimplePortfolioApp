@@ -32,9 +32,9 @@
             {{#each users}}
                 <div class="userName">{{userName}}</div>
                 {{#if htmlFiles.length}}
-                    <ul>
+                    <ul class="fileList">
                     {{#each htmlFiles}}
-                        <li><a href="{{link}}">{{filename}}</a></li>
+                        <li class="fileName"><a class="fileLink" href="{{link}}">{{filename}}</a></li>
                     {{/each}}
                     </ul>
                 {{/if}}
