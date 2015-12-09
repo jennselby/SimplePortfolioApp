@@ -12,7 +12,8 @@ Accounts.onLogin(function () {
 
 Template.fileUpload.events({
     'click .submit': function(event, template) {
-        if (!Meteor.user()) {
+        var user = Meteor.user();
+        if (!user || !user.canUpload) {
             return;
         }
 
