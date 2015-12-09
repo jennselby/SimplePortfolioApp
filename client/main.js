@@ -72,7 +72,7 @@ Template.fileIndex.helpers({
             }
             htmlFiles = [];
             _.each(user.htmlFiles, function(htmlFilename) {
-                htmlFiles.push({'link': Meteor.absoluteUrl() + Meteor.user().username + '/' + htmlFilename,
+                htmlFiles.push({'link': Meteor.absoluteUrl() + user.username + '/' + htmlFilename,
                                 'filename': htmlFilename});
             });
             currentUsers.push({'userName': user.profile.name, 'htmlFiles': htmlFiles});
