@@ -52,7 +52,7 @@ function authorizeFilesChange(userId, doc) {
         return false;
     }
 
-    if (!doc.owner || doc.owner !== userId) {
+    if (!doc.owner || (doc.owner !== userId && !user.isAdmin)) {
         return false;
     }
 
@@ -102,9 +102,9 @@ WebApp.connectHandlers.use(function (req, res, next) {
 });
 
 Meteor.methods({
-    addHtmlFile: function (fileName) {
-        if (Meteor.userId() && Meteor.user().canUpload) {
-            Meteor.users.update({_id:Meteor.userId()}, {$addToSet:{'htmlFiles': fileName}})
+    addHtmlFile: function (fileName, ownerId) {
+        if (Meteor.userId() && Meteor.user().canUpload && (Meteor.userId() == ownerId || Meteor.user().isAdmin)) {
+            Meteor.users.update({_id:ownerId}, {$addToSet:{'htmlFiles': fileName}})
         }
     }
 });

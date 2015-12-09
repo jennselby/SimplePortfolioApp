@@ -17,6 +17,22 @@ Template.fileUpload.events({
             return;
         }
 
+        var ownerId = Meteor.userId();
+        var ownerUsername = user.username;
+        // admins do not have their own files. They must specify the owner of the file.
+        if (user.isAdmin) {
+            ownerUsername = $('#ownerUsername').val();
+            if (!ownerUsername) {
+                Session.set('message', 'Please specify an owner of the file.');
+                return;
+            }
+            ownerId = Meteor.users.findOne({'username': ownerUsername})._id;
+            if (!ownerId) {
+                Session.set('message', 'User ' + ownerUsername + ' not found.');
+                return;
+            }
+        }
+
         var files = $('.userFile')[0].files;
 
         Session.set('message', 'Uploading');
@@ -24,7 +40,7 @@ Template.fileUpload.events({
         var messages = [];
         for (var index = 0, numFiles = files.length; index < numFiles; index++) {
             var fsFile = new FS.File(files[index]);
-            fsFile.owner = Meteor.userId();
+            fsFile.owner = ownerId;
             Files.insert(fsFile, function (err, fileObj) {
                 // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
                 var result = {};
@@ -35,10 +51,10 @@ Template.fileUpload.events({
                 }
                 else {
                     result.fileMessage = 'Uploaded file';
-                    result.link = Meteor.absoluteUrl() + Meteor.user().username + '/' + fileObj.name();
+                    result.link = Meteor.absoluteUrl() + ownerUsername + '/' + fileObj.name();
                     result.filename = fileObj.name();
                     if (result.filename.endsWith('.html')) {
-                        Meteor.call('addHtmlFile', fileObj.name());
+                        Meteor.call('addHtmlFile', fileObj.name(), ownerId);
                     }
                 }
                 var results = Session.get('results').concat(result);
@@ -85,3 +101,15 @@ Template.fileIndex.helpers({
         return grades;
     }
 });
+
+Template.fileUpload.helpers({
+    'users': function () {
+        if (!Meteor.user().isAdmin) {
+            return [];
+        }
+
+        return Meteor.users.find({'isAdmin': false, 'canUpload': true},
+                                {fields: {'profile': 1, 'username': 1},
+                                sort: {'profile.name': 1}}).fetch();
+    }
+})

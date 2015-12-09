@@ -13,6 +13,15 @@
     {{#if currentUser}}
         {{#if currentUser.canUpload }}
             <input class="userFile" type="file" name="userFile" multiple/>
+            {{#if currentUser.isAdmin }}
+                <label for="ownerUsername">File Owner</label>
+                <select name="ownerUsername" id="ownerUsername">
+                        <option value="" selected></option>
+                    {{#each users}}
+                        <option value="{{username}}">{{profile.name}}</option>
+                    {{/each}}
+                </select>
+            {{/if}}
             <input class="submit" type="submit" value="Upload" name="submit">
         {{/if}}
     {{/if}}
