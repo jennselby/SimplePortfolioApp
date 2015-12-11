@@ -28,10 +28,12 @@
 </template>
 
 <template name="uploadedStatus">
-    {{message}}
-    {{#each results}}
-        {{fileMessage}} <a href="{{link}}">View {{filename}}</a>
-    {{/each}}
+    {{#if currentUser}}
+        {{message}}
+        {{#each results}}
+            {{fileMessage}} <a href="{{link}}">View {{filename}}</a>
+        {{/each}}
+    {{/if}}
 </template>
 
 <template name="fileIndex">

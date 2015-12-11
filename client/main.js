@@ -7,7 +7,7 @@ Accounts.ui.config({
 Accounts.onLogin(function () {
     document.cookie = 'simple-portfolio-server=' + Accounts._storedLoginToken() + '; path=/';
     Session.set('message', '');
-
+    Session.set('results', []);
 });
 
 Template.fileUpload.events({
