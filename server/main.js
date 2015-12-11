@@ -97,6 +97,9 @@ WebApp.connectHandlers.use(function (req, res, next) {
                         Meteor.npmRequire("send")(req, filepath).pipe(res);
                         return;
                     }
+                    res.writeHead(404, {'Content-Type': 'text/event-stream'});
+                    res.end();
+                    return;
                 }
             }
         }
