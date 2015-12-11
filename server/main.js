@@ -8,8 +8,13 @@ Meteor.startup(function () {
     if (typeof initialUsers !== "undefined" && typeof defaultPassword !== "undefined") {
         _.each(initialUsers, function (user) {
             if (! Meteor.users.findOne({username: user.username})) {
+
+                var password = defaultPassword;
+                if (user.password) {
+                    password = user.password;
+                }
                 // Create the user
-                var id = Accounts.createUser({username: user.username, password: defaultPassword,
+                var id = Accounts.createUser({username: user.username, password: password,
                                               profile: {name: user.name}});
 
                 // By default, users can upload and aren't admins, but this can be overridden in

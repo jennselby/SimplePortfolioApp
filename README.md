@@ -27,6 +27,7 @@ initialUsers = [
     {"name": "Student W.", "username": "stuwxyz", "grade": "7th Grade"},
 ];
 ```
+Users can also have a password field that overrides the default.
 
 
 ## Running the Server
