@@ -67,6 +67,19 @@ Template.fileUpload.events({
     }
 });
 
+Template.fileUpload.helpers({
+    'users': function () {
+        if (!Meteor.user().isAdmin) {
+            return [];
+        }
+
+        return Meteor.users.find({'isAdmin': false, 'canUpload': true},
+                                {fields: {'profile': 1, 'username': 1},
+                                sort: {'profile.name': 1}}).fetch();
+    }
+})
+
+
 Template.uploadedStatus.helpers({
     'message': function () { return Session.get('message'); },
     'results': function () { return Session.get('results'); }
@@ -101,15 +114,3 @@ Template.fileIndex.helpers({
         return grades;
     }
 });
-
-Template.fileUpload.helpers({
-    'users': function () {
-        if (!Meteor.user().isAdmin) {
-            return [];
-        }
-
-        return Meteor.users.find({'isAdmin': false, 'canUpload': true},
-                                {fields: {'profile': 1, 'username': 1},
-                                sort: {'profile.name': 1}}).fetch();
-    }
-})
