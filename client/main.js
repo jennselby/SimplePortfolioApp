@@ -12,6 +12,10 @@ Accounts.onLogin(function () {
     document.cookie = 'simple-portfolio-server=' + Accounts._storedLoginToken() + '; path=/';
     Session.set('message', '');
     Session.set('results', []);
+    // the main content depends on the grade of the user
+    Session.set('contentTemplate', Meteor.user().grade.replace(/ /g, ''));
+    // teachers can switch between views, so they get a subview
+    Session.set('subContentTemplate', 'FileIndex');
 });
 
 Template.fileUpload.events({
@@ -89,7 +93,27 @@ Template.uploadedStatus.helpers({
     'results': function () { return Session.get('results'); }
 });
 
-Template.fileIndex.helpers({
+Template.content.helpers({
+    'contentTemplate': function () { return Session.get('contentTemplate'); },
+});
+
+Template.content.events({
+    'click #5thGradeLink': function() {
+        Session.set('subContentTemplate', '5thGrade');
+    },
+    'click #8thGradeLink': function() {
+        Session.set('subContentTemplate', '8thGrade');
+    },
+    'click #FileIndexLink': function() {
+        Session.set('subContentTemplate', 'FileIndex');
+    }
+});
+
+Template.Teacher.helpers({
+    'subContentTemplate': function () { return Session.get('subContentTemplate'); },
+});
+
+Template.FileIndex.helpers({
     'grades': function () {
         var grades = [];
         var users = Meteor.users.find({'isAdmin': false, 'canUpload': true},

@@ -6,7 +6,7 @@
     {{> loginButtons }}
     {{> fileUpload }}
     {{> uploadedStatus}}
-    {{> fileIndex}}
+    {{> content}}
 </body>
 
 <template name="fileUpload">
@@ -36,7 +36,35 @@
     {{/if}}
 </template>
 
-<template name="fileIndex">
+<template name="content">
+    {{#if currentUser}}
+        {{> UI.dynamic template=contentTemplate }}
+    {{/if}}
+</template>
+
+
+<template name="Teacher">
+    {{#if currentUser}}
+        <div class="nav" id="5thGradeLink">5th Grade</div>
+        <div class="nav" id="8thGradeLink">8th Grade</div>
+        <div class="nav" id="FileIndexLink">Full File Index</div>
+        {{> UI.dynamic template=subContentTemplate }}
+    {{/if}}
+</template>
+
+<template name="5thGrade">
+    {{#if currentUser}}
+        <p>This is the 5th grade template</p>
+    {{/if}}
+</template>
+
+<template name="8thGrade">
+    {{#if currentUser}}
+        <p>This is the 8th grade template</p>
+    {{/if}}
+</template>
+
+<template name="FileIndex">
     {{#if currentUser}}
         {{#each grades}}
             <div class="gradeName">{{gradeName}}</div>
