@@ -1,4 +1,8 @@
-Meteor.subscribe('userData');
+// subscribe to extra user data every time user changes
+// http://stackoverflow.com/questions/19391308/custom-fields-on-meteor-users-not-being-published
+Deps.autorun(function () {
+    Meteor.subscribe('userData');
+});
 
 Accounts.ui.config({
     passwordSignupFields: 'USERNAME_ONLY'
