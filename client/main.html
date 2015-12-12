@@ -58,9 +58,17 @@
     {{/if}}
 </template>
 
-<template name="8thGrade">
+<template name="EigthGrade">
     {{#if currentUser}}
-        <p>This is the 8th grade template</p>
+        <ul class="eighthFileList">
+        {{#each students}}
+            {{#if link}}
+                <li class="studentItem"><a class="studentLink" href="{{link}}">{{userName}}</a></li>
+            {{else}}
+                <li class="studentItem">{{userName}}</li>
+            {{/if}}
+        {{/each}}
+        </ul>
     {{/if}}
 </template>
 
