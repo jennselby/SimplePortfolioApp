@@ -106,7 +106,7 @@ Template.content.events({
         Session.set('subContentTemplate', '5thGrade');
     },
     'click #8thGradeLink': function() {
-        Session.set('subContentTemplate', 'EigthGrade');
+        Session.set('subContentTemplate', 'EighthGrade');
     },
     'click #FileIndexLink': function() {
         Session.set('subContentTemplate', 'FileIndex');
@@ -117,7 +117,7 @@ Template.Teacher.helpers({
     'subContentTemplate': function () { return Session.get('subContentTemplate'); },
 });
 
-Template.EigthGrade.helpers({
+Template.EighthGrade.helpers({
     'students': function () {
         var students = [];
         var users = Meteor.users.find({'isAdmin': false, 'canUpload': true, 'grade': '8th Grade'},
