@@ -82,25 +82,27 @@ WebApp.connectHandlers.use(function (req, res, next) {
         if (loggedInUser) {
 
             // looking for URLs of form /username/filename
-            var urlParts = req.url.split('/');
-            if (urlParts.length === 3) {
-                var username = urlParts[1];
-                var filename = urlParts[2];
-                var user = Meteor.users.findOne({username: username})
-                if (user) {
-                    var files = Files.find({owner: user._id, "original.name": filename}).fetch();
-                    // the user might have uploaded multiple versions. Use the latest one
-                    files = _.sortBy(files, function(item) {return -item.uploadedAt});
-                    if (files.length > 0) {
-                        var filepath = Npm.require("path").join(Meteor.settings.uploadDir,
-                                                                files[0].copies.files.key);
-                        Meteor.npmRequire("send")(req, filepath).pipe(res);
-                        return;
+            if (req.url !== '/') {
+                var urlParts = req.url.split('/');
+                if (urlParts.length === 3) {
+                    var username = urlParts[1];
+                    var filename = urlParts[2];
+                    var user = Meteor.users.findOne({username: username})
+                    if (user) {
+                        var files = Files.find({owner: user._id, "original.name": filename}).fetch();
+                        // the user might have uploaded multiple versions. Use the latest one
+                        files = _.sortBy(files, function(item) {return -item.uploadedAt});
+                        if (files.length > 0) {
+                            var filepath = Npm.require("path").join(Meteor.settings.uploadDir,
+                                                                    files[0].copies.files.key);
+                            Meteor.npmRequire("send")(req, filepath).pipe(res);
+                            return;
+                        }
                     }
-                    res.writeHead(404, {'Content-Type': 'text/event-stream'});
-                    res.end();
-                    return;
                 }
+                res.writeHead(404, {'Content-Type': 'text/event-stream'});
+                res.end();
+                return;
             }
         }
     }
