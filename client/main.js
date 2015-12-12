@@ -1,8 +1,4 @@
-// subscribe to extra user data every time user changes
-// http://stackoverflow.com/questions/19391308/custom-fields-on-meteor-users-not-being-published
-Deps.autorun(function () {
-    Meteor.subscribe('userData');
-});
+Meteor.subscribe('userData');
 
 Accounts.ui.config({
     passwordSignupFields: 'USERNAME_ONLY'
@@ -12,10 +8,17 @@ Accounts.onLogin(function () {
     document.cookie = 'simple-portfolio-server=' + Accounts._storedLoginToken() + '; path=/';
     Session.set('message', '');
     Session.set('results', []);
-    // the main content depends on the grade of the user
-    Session.set('contentTemplate', Meteor.user().grade.replace(/ /g, ''));
-    // teachers can switch between views, so they get a subview
-    Session.set('subContentTemplate', 'FileIndex');
+});
+
+Tracker.autorun(function () {
+    if (Meteor.user() && Meteor.user().grade) {
+        // the main content depends on the grade of the user
+        Session.set('contentTemplate', Meteor.user().grade.replace(/ /g, ''));
+        // teachers can switch between views, so they get a subview
+        if (Meteor.user().grade === 'Teacher') {
+            Session.set('subContentTemplate', 'FileIndex');
+        }
+    }
 });
 
 Template.fileUpload.events({
