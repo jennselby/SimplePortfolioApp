@@ -1,0 +1,76 @@
+#unauth {
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 4em;
+}
+.eighthContent {
+    background-image: url('flag_collage.jpg');
+    background-repeat: no-repeat;
+    background-position: 95% 5%;
+    background-attachment: fixed;
+    background-size: auto 90%;
+}
+.eighthTitle {
+    font-size: 20pt;
+    font-weight: bold;
+    position:fixed;
+    text-align:center;
+    background-color:red;
+    color:black;
+    width:100%;
+    left:0px;
+    top:-10px;
+    height: 3em;
+    line-height: 3em;
+}
+.eighthFileList, #teacherNav {
+    list-style-type: none;
+    color: black;
+}
+.eighthFileList {
+    margin-top: 6em;
+}
+.eighthStudent {
+    font-style: italic;
+    color: #999;
+}
+.eighthLink, .eighthStudent, .teacherNavItem {
+    width:175px;
+    background-color:white;
+    border-radius: 25px;
+    border:2px solid red;
+    text-align: center;
+}
+.eighthLink:visited, .teacherNavItem:visited {
+    border: 2px solid #5E2D79;
+}
+.eighthLink:hover, .teacherNavItem:hover {
+    font-weight:bold;
+}
+.eighthAttribution {
+    font-style: italic;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+#controls, #teacherNav {
+    font-size: 12pt;
+    background: white;
+    z-index: 5;
+    padding: 8px 12px;
+    border: 1px solid #CCC;
+    border-radius: 4px;
+    box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.2);
+    color: #333;
+}
+#controls {
+    top: 0.5em;
+    left: 0.5em;
+    position: fixed;
+}
+#teacherNav {
+    top: 0px;
+    right: 0px;
+    position: absolute;
+}

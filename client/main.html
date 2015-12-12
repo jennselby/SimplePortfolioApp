@@ -3,26 +3,42 @@
 </head>
 
 <body>
-    {{> loginButtons }}
-    {{> fileUpload }}
-    {{> uploadedStatus}}
+    {{> controls}}
     {{> content}}
 </body>
+
+<template name="controls">
+    {{#if currentUser }}
+        <div id="controls">
+            {{> loginButtons }}
+            {{> fileUpload }}
+            {{> uploadedStatus}}
+        </div>
+    {{else}}
+        <div id="unauth">
+            {{> loginButtons }}
+        </div>
+    {{/if}}
+</template>
 
 <template name="fileUpload">
     {{#if currentUser}}
         {{#if currentUser.canUpload }}
-            <input class="userFile" type="file" name="userFile" multiple/>
             {{#if currentUser.isAdmin }}
-                <label for="ownerUsername">File Owner</label>
-                <select name="ownerUsername" id="ownerUsername">
-                        <option value="" selected></option>
-                    {{#each users}}
-                        <option value="{{username}}">{{profile.name}}</option>
-                    {{/each}}
-                </select>
+                <div>
+                    <label for="ownerUsername">File Owner</label>
+                    <select name="ownerUsername" id="ownerUsername">
+                            <option value="" selected></option>
+                        {{#each users}}
+                            <option value="{{username}}">{{profile.name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
             {{/if}}
-            <input class="submit" type="submit" value="Upload" name="submit">
+            <div>
+                <input class="userFile" type="file" name="userFile" multiple/>
+                <input class="submit" type="submit" value="Upload" name="submit">
+            </div>
         {{/if}}
     {{/if}}
 </template>
@@ -45,9 +61,11 @@
 
 <template name="Teacher">
     {{#if currentUser}}
-        <div class="nav" id="5thGradeLink">5th Grade</div>
-        <div class="nav" id="8thGradeLink">8th Grade</div>
-        <div class="nav" id="FileIndexLink">Full File Index</div>
+        <ul id="teacherNav">
+            <li class="teacherNavItem" id="5thGradeLink">5th Grade</li>
+            <li class="teacherNavItem" id="8thGradeLink">8th Grade</li>
+            <li class="teacherNavItem" id="FileIndexLink">Full File Index</li>
+        </ul>
         {{> UI.dynamic template=subContentTemplate }}
     {{/if}}
 </template>
@@ -58,17 +76,25 @@
     {{/if}}
 </template>
 
-<template name="EigthGrade">
+<template name="EighthGrade">
     {{#if currentUser}}
-        <ul class="eighthFileList">
-        {{#each students}}
-            {{#if link}}
-                <li class="studentItem"><a class="studentLink" href="{{link}}">{{userName}}</a></li>
-            {{else}}
-                <li class="studentItem">{{userName}}</li>
-            {{/if}}
-        {{/each}}
-        </ul>
+        <div class="eighthContent">
+            <div class="eighthTitle">2015 World's Fair</div>
+            <ul class="eighthFileList">
+            {{#each students}}
+                {{#if link}}
+                    <li class="eighthLink"><a href="{{link}}">{{userName}}</a></li>
+                {{else}}
+                    <li class="eighthStudent">{{userName}}</li>
+                {{/if}}
+            {{/each}}
+            </ul>
+            <div class="eighthAttribution">
+                <a href="https://www.flickr.com/photos/54506228@N03/5920002891">"Flags Collage”</a>
+                by <a href="https://www.flickr.com/photos/54506228@N03/">AlexR.L.</a>
+                is licensed under <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>.
+            </div>
+        </div>
     {{/if}}
 </template>
 
