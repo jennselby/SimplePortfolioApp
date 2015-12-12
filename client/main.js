@@ -13,7 +13,8 @@ Accounts.onLogin(function () {
 Tracker.autorun(function () {
     if (Meteor.user() && Meteor.user().grade) {
         // the main content depends on the grade of the user
-        Session.set('contentTemplate', Meteor.user().grade.replace(/ /g, ''));
+        var template = Meteor.user().grade.replace(/ /g, '').replace(/8/, 'Eigh').replace(/5/, 'Fif');
+        Session.set('contentTemplate', template);
         // teachers can switch between views, so they get a subview
         if (Meteor.user().grade === 'Teacher') {
             Session.set('subContentTemplate', 'FileIndex');
