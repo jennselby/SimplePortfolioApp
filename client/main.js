@@ -128,7 +128,7 @@ Template.EighthGrade.helpers({
             // for 8th grade students, only link to the index.html file
             var indexIndex = user.htmlFiles.indexOf('index.html');
             if (indexIndex != -1) {
-                student.link = Meteor.absoluteUrl() + user.username + '/' + htmlFilename;
+                student.link = Meteor.absoluteUrl() + user.username + '/' + user.htmlFiles[indexIndex];
             }
             students.push(student);
         });
