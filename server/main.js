@@ -42,7 +42,7 @@ Meteor.publish('userData', function () {
         return Meteor.users.find({},
                                  {fields: {'username': 1, 'grade': 1, 'profile': 1,
                                            'isAdmin': 1, 'canUpload': 1,
-                                           'htmlFiles': 1}});
+                                           'htmlFiles': 1, 'folder': 1}});
     } else {
         this.ready();
     }
@@ -81,16 +81,24 @@ WebApp.connectHandlers.use(function (req, res, next) {
         var loggedInUser = Meteor.users.findOne({'services.resume.loginTokens.hashedToken': hashedToken});
         if (loggedInUser) {
 
-            // looking for URLs of form /username/filename
+            // looking for URLs of form /username/filename or /filename/filename.html (for 5th grade)
             if (req.url !== '/') {
                 var urlParts = req.url.split('/');
                 if (urlParts.length === 3) {
-                    var username = urlParts[1];
+                    var folder = urlParts[1];
                     var filename = urlParts[2];
-                    var user = Meteor.users.findOne({username: username})
+                    var files = [];
+
+                    // URLs of form /username/filename
+                    var user = Meteor.users.findOne({username: folder})
                     if (user) {
-                        var files = Files.find({owner: user._id, "original.name": filename}).fetch();
+                        files = Files.find({owner: user._id, "original.name": filename}).fetch();
                         // the user might have uploaded multiple versions. Use the latest one
+                    }
+                    else {
+                        files = Files.find({folder: folder, "original.name": filename}).fetch();
+                    }
+                    if (files) {
                         files = _.sortBy(files, function(item) {return -item.uploadedAt});
                         if (files.length > 0) {
                             var filepath = Npm.require("path").join(Meteor.settings.uploadDir,
@@ -114,7 +122,8 @@ WebApp.connectHandlers.use(function (req, res, next) {
 Meteor.methods({
     addHtmlFile: function (fileName, ownerId) {
         if (Meteor.userId() && Meteor.user().canUpload && (Meteor.userId() == ownerId || Meteor.user().isAdmin)) {
-            Meteor.users.update({_id:ownerId}, {$addToSet:{'htmlFiles': fileName}})
+            Meteor.users.update({_id:ownerId}, {$addToSet:{'htmlFiles': fileName},
+                                                $set:     {'folder': fileName.replace('.html', '')}});
         }
     }
 });
