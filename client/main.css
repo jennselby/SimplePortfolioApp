@@ -28,8 +28,11 @@
     list-style-type: none;
     color: black;
 }
-.eighthFileList {
+.eighthFileList, .gradeName {
     margin-top: 6em;
+}
+.gradeName {
+    font-size: 16pt;
 }
 .eighthStudent {
     font-style: italic;
