@@ -105,6 +105,7 @@ WebApp.connectHandlers.use(function (req, res, next) {
                                 console.error("Bad file entry: url", req.url, "file", files[0]);
                                 res.writeHead(500, {'Content-Type': 'text/event-stream'});
                                 res.end();
+                                return;
                             }
                             var filepath = Npm.require("path").join(Meteor.settings.uploadDir,
                                                                     files[0].copies.files.key);
