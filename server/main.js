@@ -101,6 +101,11 @@ WebApp.connectHandlers.use(function (req, res, next) {
                     if (files) {
                         files = _.sortBy(files, function(item) {return -item.uploadedAt});
                         if (files.length > 0) {
+                            if (!files[0].copies || !files[0].copies.files) {
+                                console.error("Bad file entry: url", req.url, "file", files[0]);
+                                res.writeHead(500, {'Content-Type': 'text/event-stream'});
+                                res.end();
+                            }
                             var filepath = Npm.require("path").join(Meteor.settings.uploadDir,
                                                                     files[0].copies.files.key);
                             Meteor.npmRequire("send")(req, filepath).pipe(res);
