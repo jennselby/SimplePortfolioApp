@@ -9,7 +9,7 @@
 
 <template name="controls">
     {{#if currentUser }}
-        <div id="controls">
+        <div id="controls" class="hidden-xs">
             {{> loginButtons }}
             {{> fileUpload }}
             {{> uploadedStatus}}
@@ -61,7 +61,7 @@
 
 <template name="Teacher">
     {{#if currentUser}}
-        <ul id="teacherNav">
+        <ul id="teacherNav" class="hidden-xs">
             <li class="teacherNavItem" id="5thGradeLink">5th Grade</li>
             <li class="teacherNavItem" id="8thGradeLink">8th Grade</li>
             <li class="teacherNavItem" id="FileIndexLink">Full File Index</li>
@@ -80,16 +80,19 @@
     {{#if currentUser}}
         <div class="eighthContent">
             <div class="eighthTitle">2015 World's Fair</div>
-            <ul class="eighthFileList">
+            <div class="btn-group-vertical eighthFileList">
             {{#each students}}
                 {{#if link}}
-                    <li class="eighthLink"><a href="{{link}}">{{userName}}</a></li>
+                    <a href="{{link}}" class="btn btn-lg btn-primary outline eighthLink col-sm-2">{{userName}}</a>
                 {{else}}
-                    <li class="eighthStudent">{{userName}}</li>
+                    <a href="#" class="btn btn-lg btn-primary outline eighthNoFiles col-sm-2">{{userName}}</a>
                 {{/if}}
             {{/each}}
-            </ul>
-            <div class="eighthAttribution">
+            </div>
+            <div class="eighthImage col-sm-10 hidden-xs">
+                <img id="flagCollage" src="flag_collage.jpg" alt="Flag Collage">
+            </div>
+            <div class="eighthAttribution col-sm-10 hidden-xs">
                 <a href="https://www.flickr.com/photos/54506228@N03/5920002891">"Flags Collage”</a>
                 by <a href="https://www.flickr.com/photos/54506228@N03/">AlexR.L.</a>
                 is licensed under <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>.

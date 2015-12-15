@@ -4,63 +4,94 @@
     margin-left: auto;
     margin-top: 4em;
 }
-.eighthContent {
-    background-image: url('flag_collage.jpg');
-    background-repeat: no-repeat;
-    background-position: 95% 5%;
-    background-attachment: fixed;
-    background-size: auto 90%;
-}
 .eighthTitle {
     font-size: 20pt;
     font-weight: bold;
-    position:fixed;
-    text-align:center;
-    background-color:red;
-    color:black;
-    width:100%;
-    left:0px;
-    top:-10px;
+    text-align: center;
+    background-color: red;
+    color: black;
+    width: 100%;
     height: 3em;
     line-height: 3em;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    z-index: 5;
 }
-.eighthFileList, #teacherNav {
+#teacherNav {
     list-style-type: none;
     color: black;
 }
 .eighthFileList, .gradeName {
     margin-top: 6em;
+    margin-left: 10px;
+    z-index: 4;
+}
+.eighthImage {
+    position: fixed;
+    right: 10px;
+    top: 6em;
+    z-index: 1;
+}
+.eighthAttribution {
+    font-style: italic;
+    color: black;
+    position: fixed;
+    right: 15px;
+    bottom: 10px;
+    z-index: 5;
+    background: #EEE;
+    opacity: 0.8;
+}
+#flagCollage {
+    display: block;
+    width: 100%;
+}
+.eighthNoFiles {
+    font-style: italic;
+}
+/* Ideas from https://bootstrapbay.com/blog/bootstrap-button-styles/ */
+.btn.outline {
+    background: white;
+    padding: 12px 22px;
+}
+.btn-primary.outline.eighthLink {
+    border: 2px solid red;
+    color: red;
+}
+.btn-primary.outline.eighthNoFiles {
+    border: 2px solid red;
+    color: #999;
+}
+.btn-primary.outline:hover, .btn-primary.outline:focus, .btn-primary.outline:active, .btn-primary.outline.active, .open > .dropdown-toggle.btn-primary {
+    color: darkred;
+    border-color: darkred;
+}
+.btn-primary.outline:active, .btn-primary.outline.active {
+    border-color: darkred;
+    color: darkred;
+    box-shadow: none;
 }
 .gradeName {
     font-size: 16pt;
 }
-.eighthStudent {
-    font-style: italic;
-    color: #999;
-}
-.eighthLink, .eighthStudent, .teacherNavItem {
+.teacherNavItem {
     width:175px;
     background-color:white;
     border-radius: 25px;
     border:2px solid red;
     text-align: center;
 }
-.eighthLink:visited, .teacherNavItem:visited {
+.teacherNavItem:visited {
     border: 2px solid #5E2D79;
 }
-.eighthLink:hover, .teacherNavItem:hover {
+.teacherNavItem:hover {
     font-weight:bold;
 }
-.eighthAttribution {
-    font-style: italic;
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
-}
 #controls, #teacherNav {
-    font-size: 12pt;
+    font-size: 8pt;
     background: white;
-    z-index: 5;
+    z-index: 10;
     padding: 8px 12px;
     border: 1px solid #CCC;
     border-radius: 4px;
@@ -75,7 +106,8 @@
 #teacherNav {
     top: 0px;
     right: 0px;
-    position: absolute;
+    position: fixed;
+    float: right;
 }
 #fifthEnter {
     height: 3em;
