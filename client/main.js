@@ -20,6 +20,9 @@ Tracker.autorun(function () {
             Session.set('subContentTemplate', 'FileIndex');
         }
     }
+    if (!Meteor.userId()) {
+        Session.set("Meteor.loginButtons.dropdownVisible", true);
+    }
 });
 
 Template.fileUpload.events({
