@@ -113,9 +113,7 @@
 #fifthEnter {
     height: 3em;
     line-height: 3em;
-    width: 50%;
-    margin-left: auto;
-    margin-right: auto;
+    width: 100%;
     margin-top: 6em;
     font-size: 24pt;
     background: darkblue;
