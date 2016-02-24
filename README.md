@@ -15,7 +15,8 @@ Note: Linux & OSX only; see [Meteor's install instructions](https://www.meteor.c
 
 ```
 {
-    "uploadDir": "/path/to/uploaded/files"
+    "uploadDir": "/path/to/files/uploaded/through/the/WebUI",
+    "staticDir": "/path/to/files/uploaded/manually"
 }
 ```
 3. Create a file of all users that should be created with the following format

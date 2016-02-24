@@ -4,6 +4,10 @@ Meteor.startup(function () {
         process.exit(1);
     }
 
+    if (! Meteor.settings.staticDir) {
+        console.log('If you want to serve static files, please set the static directory in your settings file.');
+    }
+
     // create accounts
     if (typeof initialUsers !== "undefined" && typeof defaultPassword !== "undefined") {
         _.each(initialUsers, function (user) {
@@ -69,6 +73,11 @@ Files.allow({
     'update': authorizeFilesChange,
 });
 
+
+if (Meteor.settings.staticDir) {
+    var connect = WebAppInternals.NpmModules.connect.module;
+    WebApp.connectHandlers.use('/static', connect.static(Meteor.settings.staticDir));
+}
 
 
 // read from mongo

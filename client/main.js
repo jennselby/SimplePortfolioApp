@@ -150,15 +150,7 @@ Template.Teacher.helpers({
 
 Template.FifthGrade.helpers({
     'link' : function () {
-        var users = Meteor.users.find({'isAdmin': false, 'canUpload': true, 'grade': '5th Grade'},
-                                      {fields: {'profile': 1, 'htmlFiles': 1, 'username': 1, 'folder': 1},
-                                       sort: {'profile.name': 1}}).fetch();
-        var htmlFilenames = [];
-        _.each(users, function (user) {
-            htmlFilenames = htmlFilenames.concat(
-                                _.map(user.htmlFiles, function(filename) {return user.folder + '/' + filename;}));
-        });
-        return htmlFilenames[Math.floor(Math.random()*htmlFilenames.length)];
+        return 'static/index.html';
     }
 });
 
